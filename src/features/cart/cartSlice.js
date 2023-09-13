@@ -110,20 +110,33 @@ const cartSlice = createSlice({
             state.total = total
         },
     },
-    //we adding extra reducers here
-    extraReducers: {
-        [getCartItems.pending]: (state) => {
+    //extra reducer using builder in RTK 2.0
+    extraReducers: (builder) => {
+        builder.addCase(getCartItems.pending, (state) => {
             state.isLoading = true
-        },
-        [getCartItems.fulfilled]: (state, action) => {
+        }).addCase(getCartItems.fulfilled,(state, action) => {
             console.log(action)
             state.isLoading = false
             state.cartItems = action.payload
-        },
-        [getCartItems.rejected]: (state) => {
+        }).addCase(getCartItems.rejected, (state) => {
             state.isLoading = false
-        }
-    }
+        })
+     }
+
+    //we adding extra reducers here
+    // extraReducers: {
+    //     [getCartItems.pending]: (state) => {
+    //         state.isLoading = true
+    //     },
+    //     [getCartItems.fulfilled]: (state, action) => {
+    //         console.log(action)
+    //         state.isLoading = false
+    //         state.cartItems = action.payload
+    //     },
+    //     [getCartItems.rejected]: (state) => {
+    //         state.isLoading = false
+    //     }
+    // }
     
 })
 // console.log(cartSlice)
